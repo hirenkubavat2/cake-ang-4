@@ -1,0 +1,71 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "my-app"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "styles.css",
+        "../node_modules/template-assests/css/bootstrap/css/bootstrap.min.css",
+        "../node_modules/template-assests/css/metisMenu/metisMenu.css",
+        "../node_modules/template-assests/dist/css/sb-admin-2.css",
+        "../node_modules/template-assests/css/morrisjs/morris.css",
+        "../node_modules/template-assests/css/font-awesome/css/font-awesome.min.css"
+      ],
+      "scripts": [
+        "../node_modules/template-assests/css/jquery/jquery.min.js",
+        "../node_modules/template-assests/css/bootstrap/js/bootstrap.min.js",
+        "../node_modules/template-assests/css/metisMenu/metisMenu.min.js",
+        "../node_modules/template-assests/css/raphael/raphael.min.js",
+        "../node_modules/template-assests/css/morrisjs/morris.min.js",
+        "../node_modules/template-assests/data/morris-data.js",
+        "../node_modules/template-assests/dist/js/sb-admin-2.js",
+        "../node_modules/template-assests/css/bootstrap/js/emodal.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json"
+    },
+    {
+      "project": "src/tsconfig.spec.json"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "css",
+    "component": {}
+  }
+}

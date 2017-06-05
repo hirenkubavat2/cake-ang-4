@@ -1,0 +1,43 @@
+<div id="page-wrapper">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">Tables</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+  <!-- /.row -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Context Classes
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Role Name</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr  *ngFor="let item of roles">
+                <td>{{ item.role }}  </td>
+                <td> <input type="button" class="btn btn-outline btn-primary" value="Edit" (click)="updateRole(item)"/> </td>
+                <td> <input type="button" class="btn btn-outline btn-warning" value="Delete" (click)="deleteRole(item.id)"/> </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.table-responsive -->
+        </div>
+        <!-- /.panel-body -->
+      </div>
+      <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+
+</div>
