@@ -55,8 +55,15 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/api/login/data',['controller'=>'Login','_ext'=>'json']);
     $routes->connect('/api/login/data/logout',['controller'=>'Login','action'=>'logout','_ext'=>'json']);
     $routes->connect('/api/users/add',['controller'=>'users','action'=>'add','_ext'=>'json']);
+    $routes->connect('/api/users/update',['controller'=>'users','action'=>'edit','_ext'=>'json']);
     $routes->connect('/api/users/list',['controller'=>'users','action'=>'view','_ext'=>'json']);
     $routes->connect('/api/users/list/*',['controller'=>'users','action'=>'view','_ext'=>'json']);
+
+    $routes->connect('/api/roles/list',['controller'=>'roles','action'=>'view','_ext'=>'json']);
+    $routes->connect('/api/roles/get/*',['controller'=>'roles','action'=>'view','_ext'=>'json']);
+    $routes->connect('/api/roles/edit/*',['controller'=>'roles','action'=>'edit','_ext'=>'json']);
+    $routes->connect('/api/roles/add',['controller'=>'roles','action'=>'add','_ext'=>'json']);
+    $routes->connect('/api/roles/delete/*',['controller'=>'roles','action'=>'delete','_ext'=>'json']);
 
     $routes->connect('/forbiden',['action'=>'forbiden']);
 
@@ -104,20 +111,20 @@ Router::scope('/', function (RouteBuilder $routes) {
 
 
 //Login routes
-/*Router::scope('login1',function($routes){
+Router::scope('login1',function($routes){
     $routes->extensions(['json']);
     $routes->connect('/login',['action'=>'index','_ext'=>'json']);
     $routes->connect('/',['action'=>'logout','_ext'=>'json']);
 
-});*/
+});
 
-Router::scope('/roles',['controller'=>'Roles'],function($routes){
+/*Router::scope('/roles',['controller'=>'Roles'],function($routes){
     $routes->connect('/',['action'=>'index','_ext'=>'json']);
     $routes->connect('/add',['action'=>'add','_ext'=>'json']);
     $routes->connect('/edit/*',['action'=>'edit','_ext'=>'json']);
     $routes->connect('/get/*',['action'=>'view','_ext'=>'json']);
     $routes->connect('/delete/*',['action'=>'view','_ext'=>'json']);
-});
+});*/
 
 
 

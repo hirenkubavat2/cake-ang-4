@@ -16,15 +16,26 @@ export class SavedataService {
 
 
     saveData(data): Observable<any> {
+        console.log(data);
         return this.http.post('api/users/add',{
             "password": data.password,
             "email": data.email,
             "username":data.email,
-            "first_name":data.firstname,
-            "last_name":data.lastname,
+            "first_name":data.first_name,
+            "last_name":data.last_name,
             "roles_id":data.roles_id
         });
 
+    }
+
+    updateUser(data,id:number):Observable<any>{
+        return this.http.post('/api/users/update',{
+            "first_name":data.first_name,
+            "last_name":data.last_name,
+            "email":data.email,
+            "roles_id":data.roles_id,
+            "id":id
+        });
     }
 
     getData(): Observable<any>{
@@ -85,11 +96,11 @@ export class SavedataService {
     }
 
     getRoles(){
-        return this.http.get('http://localhost:8765/roles/').map(data=> data.json());
+        return this.http.get('/api/roles/list').map(data=> data.json());
     }
 
     updateRole(id,data){
-        return this.http.post('http://localhost:8765/roles/edit/'+id,{
+        return this.http.post('/api/roles/edit/'+id,{
             'role':data.name,
             'active':1,
             'id':id
@@ -98,13 +109,13 @@ export class SavedataService {
 
     getRoleById(id:number){
         if(id>0)
-            return this.http.get('http://localhost:8765/roles/get/'+id).map(data=>data.json());
+            return this.http.get('/api/roles/get/'+id).map(data=>data.json());
         else
-            return this.http.get('http://localhost:8765/roles/get').map(data=>data.json());
+            return this.http.get('/api/roles/get').map(data=>data.json());
     }
 
     deleteRole(id:number){
-        return this.http.get('http://localhost:8765/roles/delete/'+id).map(data=>data.json())
+        return this.http.get('/api/roles/delete/'+id).map(data=>data.json())
         //return this.http.delete('http://localhost:8765/roles/delete/'+id);
     }
 }

@@ -135,23 +135,37 @@ class UsersController extends AppController
      * @return \Cake\Network\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit()
     {
-        $user = $this->Users->get($id, [
-            'contain' => []
-        ]);
+        $id=$this->request->data['id'];
+        $user = $this->Users->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+            if($user){
+                $data=$this->Users->save($user);
+                if ($data) {
+                    $this->message='Users saved successfully';
+                    $this->header=200;
+                    $this->status=1;
+                    $this->data=$data;
+                }else{
+                    $this->message='Could not save!';
+                    $this->header=403;
+                    $this->status=1;
+                    if($user->getErrors()){
+                        $this->data=implode("<br>" ,$this->_recursion( $user->getErrors()));
+                    }
 
-                return $this->redirect(['action' => 'index']);
+                }
+            }else{
+                $this->message='invalid request or user';
+                $this->header=403;
+                $this->status=1;
+                return;
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+
         }
-        $roles = $this->Users->Roles->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'roles'));
-        $this->set('_serialize', ['user']);
+
     }
 
     /**
