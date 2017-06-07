@@ -180,7 +180,7 @@ class AppController extends Controller
         if( !in_array($this->request->here, $this->actionList)) {
             if(!$this->checkUserToken()) {
                 header('HTTP/1.1 403  RequestSessionMissing');
-                $data = array('status' => 2, 'message' => 'request session token expired!');
+                $data = array('status' => 2, 'message' => 'Request session token expired, Login again!');
                 echo json_encode($data);
                 exit();
             }

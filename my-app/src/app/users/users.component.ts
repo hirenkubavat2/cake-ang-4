@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators, FormsModule, ValidatorFn, AbstractControl} from '@angular/forms';
 import { SavedataService } from '../savedata.service';
 import { Router,ActivatedRoute,Params } from '@angular/router';
-
+import {AuthService} from '../auth.service';
 
 
 
@@ -42,10 +42,10 @@ export class UsersComponent implements OnInit {
     editData:any;
     userId:number;
     buttonName:string;
-  constructor(private SavedataService:SavedataService,private route:Router,private activatedRoute:ActivatedRoute) {
+  constructor(private SavedataService:SavedataService,private route:Router,private activatedRoute:ActivatedRoute,private authService:AuthService) {
       this.userId=0;
       this.UserModel=new UserModel;
-
+      this.authService.checkUserLogin();
       //this.UserModel.first_name='first_name';
       console.log(this.UserModel);
       this.SavedataService.getRoleById(0).subscribe(value=>{

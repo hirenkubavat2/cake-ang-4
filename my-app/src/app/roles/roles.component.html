@@ -3,6 +3,9 @@
     <div> <br/> </div>
     <div class="col-lg-3"></div>
       <div class="col-lg-6">
+        <div *ngIf="hasErrors!='' " class="form-group alert-danger">
+          {{hasErrors}}
+        </div>
       <form [formGroup]="RolesForm" (ngSubmit)="onSubmit(RolesForm.value)">
         <div class="form-group">
           <label>Name</label>

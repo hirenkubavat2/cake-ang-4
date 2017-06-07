@@ -16,19 +16,26 @@ export class RolesComponent implements OnInit {
 
   RolesForm:FormGroup;
   res:any;
+  hasErrors:any;
   constructor(private savedataService:SavedataService,private router:Router) {
+      this.hasErrors='';
     this.RolesForm=new FormGroup({
       name:new FormControl('',[Validators.required])
     })
   }
 
   onSubmit(data){
-    console.log(data);
-   this.savedataService.saveRole(data).subscribe(value=>{
-      if(value.status==200){
-        this.router.navigateByUrl('/roles/list');
-      }
-    });
+   this.savedataService.saveRole(data).subscribe(
+       value=>{
+            if(value.status==200){
+             this.router.navigateByUrl('/roles/list');
+            }
+        },
+       err=>{
+           console.log(err.json());
+           this.hasErrors=err.json().message;
+       }
+    );
   }
   ngOnInit() {
   }
