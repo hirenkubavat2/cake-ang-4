@@ -1,57 +1,58 @@
 import { Injectable } from '@angular/core';
 import {Http,Headers,Response,RequestOptions} from '@angular/http';
-
 import 'rxjs';
 import {Observable} from "rxjs/Observable";
+import { AuthService} from './auth.service';
+
 
 @Injectable()
 
 
 export class SavedataService {
 
+    public token='';
+    public userId=0;
 
-    constructor(private http: Http) {
-        //headers.append('Access-Control-Allow-Origin','*');
+    constructor(private http: Http,private authService:AuthService) {
+        this.token=this.authService.token;
+        this.userId=this.authService.userId;
     }
 
+    addToken(){
+        return {'token':this.token,'loggedInId':this.userId};
+    }
 
     saveData(data): Observable<any> {
-        console.log(data);
-        return this.http.post('api/users/add',{
-            "password": data.password,
-            "email": data.email,
-            "username":data.email,
-            "first_name":data.first_name,
-            "last_name":data.last_name,
-            "roles_id":data.roles_id
-        });
-
+        return this.http.post('api/users/add',
+            Object.assign({},this.addToken(),{
+                "password": data.password,
+                "email": data.email,
+                "username":data.email,
+                "first_name":data.first_name,
+                "last_name":data.last_name,
+                "roles_id":data.roles_id,
+                "token": this.token
+            })
+        );
     }
 
     updateUser(data,id:number):Observable<any>{
-        return this.http.post('/api/users/update',{
-            "first_name":data.first_name,
-            "last_name":data.last_name,
-            "email":data.email,
-            "roles_id":data.roles_id,
-            "id":id
-        });
+        return this.http.post('/api/users/update',
+            Object.assign({},this.addToken(), {
+                "first_name":data.first_name,
+                "last_name":data.last_name,
+                "email":data.email,
+                "roles_id":data.roles_id,
+                "id":id
+            })
+        );
     }
 
     getData(): Observable<any>{
-        return this.http.get('/api/users/list').map(data=> data.json());
+        return this.http.post('/api/users/list',this.addToken()).map(data=> data.json());
     }
 
     login(data) : Observable<any>{
-
-        /*let order = {data:'data'};
-        this.http.post('http://localhost:8765/login', order, {
-
-        }).subscribe(res => {
-            console.log('post result %o', res);
-        });
-        return;*/
-
         return this.http.post("api/login/data",{
             'email':data.email,
             'password':data.password
@@ -59,36 +60,24 @@ export class SavedataService {
     }
 
 
-
-    /*login(data): Observable<any>{
-        return this.http.post('http://localhost:8765/login',{
-            'email':data.email,
-            'password':data.password
-
-        });
-    }*/
-
     getUserDetails(id:number){
+        return this.http.post('api/users/list/'+id,
+            Object.assign({},this.addToken())
+        ).map(data=> data.json());
 
-        return this.http.get('api/users/list/'+id).map(data=> data.json());
-
-    }
-
-    updateItem(data){
-        return this.http.put('https://reqres.in/api/users/'+data.id,{
-            "first_name": data.first_name,
-            "last_name": data.last_name
-        });
     }
 
     saveRole(data): Observable<any>{
         let headers=new Headers();
         this.createAuthorizationHeader(headers);
-        return this.http.post('http://localhost:8765/roles/add',{
+        return this.http.post('/api/roles/add',
+            Object.assign({},this.addToken(),
+            {
             'role':data.name,
             'active':1
 
-        });
+        })
+        );
     }
 
     createAuthorizationHeader(headers:Headers){
@@ -96,26 +85,45 @@ export class SavedataService {
     }
 
     getRoles(){
-        return this.http.get('/api/roles/list').map(data=> data.json());
+        return this.http.post('/api/roles/list',
+            Object.assign({},this.addToken())
+        ).map(data=> data.json());
     }
 
     updateRole(id,data){
-        return this.http.post('/api/roles/edit/'+id,{
+        return this.http.post('/api/roles/edit/'+id,
+            Object.assign({},this.addToken(),
+            {
             'role':data.name,
             'active':1,
             'id':id
-        });
+        })
+        );
     }
 
     getRoleById(id:number){
         if(id>0)
-            return this.http.get('/api/roles/get/'+id).map(data=>data.json());
+            return this.http.post('/api/roles/get/'+id,
+                Object.assign({},this.addToken())
+            ).map(data=>data.json());
         else
-            return this.http.get('/api/roles/get').map(data=>data.json());
+            return this.http.post('/api/roles/get',
+                Object.assign({},this.addToken())
+            ).map(data=>data.json());
     }
 
     deleteRole(id:number){
-        return this.http.get('/api/roles/delete/'+id).map(data=>data.json())
-        //return this.http.delete('http://localhost:8765/roles/delete/'+id);
+        return this.http.post('/api/roles/delete/'+id,
+            Object.assign({},this.addToken(),{'id':id})
+        ).map(data=>data.json())
+
+    }
+    deleteUser(id:number){
+        return this.http.post('/api/users/delete',
+            Object.assign({},this.addToken(),
+            {
+            'id':id
+        })
+        );
     }
 }

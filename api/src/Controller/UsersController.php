@@ -137,6 +137,7 @@ class UsersController extends AppController
      */
     public function edit()
     {
+
         $id=$this->request->data['id'];
         $user = $this->Users->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -175,16 +176,26 @@ class UsersController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete()
     {
         $this->request->allowMethod(['post', 'delete']);
-        $user = $this->Users->get($id);
-        if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
-        } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+        if(isset($this->request->data['id'])){
+            $id=$this->request->data['id'];
+            $user = $this->Users->get($id);
+            if ($this->Users->delete($user)) {
+                $this->message='User Deleted successfully.';
+                $this->status=1;
+                $this->header=200;
+            } else {
+                $this->message='Error ! could not be deleted try again.';
+                $this->status=1;
+                $this->header=403;
+            }
+        }else{
+            $this->message='User not found.';
+            $this->status=1;
+            $this->header=404;
         }
 
-        return $this->redirect(['action' => 'index']);
     }
 }

@@ -11,15 +11,15 @@
 
         <div class="form-group">
           <label>First Name</label>
-          <input name="first_name" [(ngModel)]="UserModel.first_name"  type="text" class="form-control" placeholder="John"  [formControlName]="first_name">
+          <input name="first_name" [(ngModel)]="UserModel.first_name"  type="text" class="form-control" placeholder="John"  formControlName="first_name">
           <div *ngIf="submitted && !UserForm.controls['first_name'].valid" class="alert alert-danger">
               First name is required
           </div>
       </div>
 
-   <!-- <div class="form-group">
+   <div class="form-group">
         <label>Last Name</label>
-        <input [(ngModel)]="UserModel.last_name"  type="text" class="form-control" placeholder="John" [formControlName]="last_name">
+        <input [(ngModel)]="UserModel.last_name"  type="text" class="form-control" placeholder="John" formControlName="last_name">
         <div *ngIf="submitted && !UserForm.controls['last_name'].valid" class="alert alert-danger">
           Last name is required
         </div>
@@ -27,42 +27,42 @@
 
       <div class="form-group">
         <label>Email</label>
-        <input [(ngModel)]="UserModel.email" type="text" class="form-control" [formControlName]="email">
+        <input [(ngModel)]="UserModel.email" type="text" class="form-control" formControlName="email">
         <div *ngIf="submitted && !UserForm.controls['email'].valid" class="alert alert-danger">
           Valid email address is required
         </div>
       </div>
--->
-              <!--<div class="form-group">
+
+              <div class="form-group">
                 <label>Roles</label>
-                <select [(ngModel)]="UserModel.roles_id" class="form-control" [formControlName]="roles_id">
+                <select [(ngModel)]="UserModel.roles_id" class="form-control" formControlName="roles_id">
                   <option value="">Select</option>
                   <option *ngFor="let item of roles" [ngValue]="item?.id"> {{ item?.role }} </option>
                 </select>
                 <div *ngIf="submitted && !UserForm.controls['roles_id'].valid" class="alert alert-danger">
                   Please select the role
                 </div>
-              </div>-->
+              </div>
 
-              <!--<div *ngIf="!userId" class="form-group">
+              <div *ngIf="!userId" class="form-group">
                 <label>Password</label>
-                <input type="password" class="form-control" [formControlName]="password">
+                <input type="password" class="form-control" formControlName="password">
                 <div *ngIf="submitted && !UserForm.controls['password'].valid" class="alert alert-danger">
                   Password length should be 8 or more
                 </div>
-              </div>-->
+              </div>
 
-        <!--<div class="form-group">
+        <div class="form-group">
           <label>Profile image</label>
-          <image-upload
+          <!--<image-upload
                   [max]="100"
-                  [url]="'/img'"
+                  [url]=""
                   [buttonCaption]="'select Images'"
                   (onFileUploadFinish)="imageUploaded($event)"
                   (onRemove)="imageRemoved($event)"
                   [formControlName]="imageupload"
-          ></image-upload>
-        </div>-->
+          ></image-upload>-->
+        </div>
 
       <button type="submit" class="btn btn-default">{{ buttonName }}</button>
       <button type="reset" class="btn btn-default">Reset </button>

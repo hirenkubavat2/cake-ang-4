@@ -26,7 +26,7 @@
               <tr  *ngFor="let item of roles">
                 <td>{{ item.role }}  </td>
                 <td> <input type="button" class="btn btn-outline btn-primary" value="Edit" (click)="updateRole(item)"/> </td>
-                <td> <input type="button" class="btn btn-outline btn-warning" value="Delete" (click)="deleteRole(item.id)"/> </td>
+                <td> <input type="button" class="btn btn-outline btn-warning" value="Delete" (click)="deleteRole(item)"/> </td>
               </tr>
               </tbody>
             </table>

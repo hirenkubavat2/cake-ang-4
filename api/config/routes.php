@@ -56,6 +56,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/api/login/data/logout',['controller'=>'Login','action'=>'logout','_ext'=>'json']);
     $routes->connect('/api/users/add',['controller'=>'users','action'=>'add','_ext'=>'json']);
     $routes->connect('/api/users/update',['controller'=>'users','action'=>'edit','_ext'=>'json']);
+    $routes->connect('/api/users/delete',['controller'=>'users','action'=>'delete','_ext'=>'json']);
     $routes->connect('/api/users/list',['controller'=>'users','action'=>'view','_ext'=>'json']);
     $routes->connect('/api/users/list/*',['controller'=>'users','action'=>'view','_ext'=>'json']);
 

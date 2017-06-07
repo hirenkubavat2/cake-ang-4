@@ -28,7 +28,7 @@ export class RolelistComponent implements OnInit {
       this.router.navigateByUrl('/roles/edit/'+item.id);
   }
 
-  deleteRole(id:number){
+  deleteRole(item){
 
     /*var options = {
       message: "Do you really want to delete ?",
@@ -40,10 +40,14 @@ export class RolelistComponent implements OnInit {
     //eModal.confirm(options).then(function(){},function(){ return ;});
 
     if(confirm('Do you really want to delete ?')){
-      this.savedataService.deleteRole(id).subscribe(value=>{
-        console.log(value);
-      });
-      this.router.navigate(['/roles']);
+      this.savedataService.deleteRole(item.id).subscribe(
+          res=>{
+            this.roles.splice(this.roles.indexOf(item),1);
+          },
+          err=>{
+            console.log(err);
+          }
+          );
     }
 
   }

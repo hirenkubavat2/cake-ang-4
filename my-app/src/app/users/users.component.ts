@@ -45,7 +45,10 @@ export class UsersComponent implements OnInit {
   constructor(private SavedataService:SavedataService,private route:Router,private activatedRoute:ActivatedRoute) {
       this.userId=0;
       this.UserModel=new UserModel;
-        this.SavedataService.getRoleById(0).subscribe(value=>{
+
+      //this.UserModel.first_name='first_name';
+      console.log(this.UserModel);
+      this.SavedataService.getRoleById(0).subscribe(value=>{
         this.roles=value.data;
         this.hasErrors='';
         this.buttonName='Create';
@@ -69,15 +72,21 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
 
-      this.UserForm=new FormGroup({
-          first_name: new FormControl('',[Validators.required]),
-          /*last_name:  new FormControl('',[Validators.required]),
-          email:     new FormControl('',[Validators.required,Validators.email]),
-          roles_id:      new FormControl('',[Validators.required])*/
-      });
-      if(!this.userId){
+      if(!this.userId){ //Insert validation
           this.UserForm=new FormGroup({
+              first_name: new FormControl('',[Validators.required]),
+              last_name:  new FormControl('',[Validators.required]),
+              email:     new FormControl('',[Validators.required,Validators.email]),
+              roles_id:      new FormControl('',[Validators.required]),
               password: new FormControl('', [Validators.required, Validators.minLength(8)])
+          });
+      }else{ //Edit Validation
+          this.UserForm=new FormGroup({
+              first_name: new FormControl('',[Validators.required]),
+              last_name:  new FormControl('',[Validators.required]),
+              email:     new FormControl('',[Validators.required,Validators.email]),
+              roles_id:      new FormControl('',[Validators.required]),
+              password: new FormControl({value:'',disabled:true}, [Validators.required, Validators.minLength(8)])
           });
       }
 

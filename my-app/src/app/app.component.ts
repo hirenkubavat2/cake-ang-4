@@ -16,9 +16,11 @@ export class AppComponent {
   title = 'Message';
   loggedIn=false;
   currentUser='';
+
   constructor(private Router:Router,private AuthService:AuthService){
     if(AuthService.checkUserLogin()){
       this.loggedIn=true;
+
     }else{
       this.Router.navigateByUrl('/login');
     }
@@ -28,7 +30,8 @@ export class AppComponent {
   logout(){
     localStorage.removeItem('currentUser');
     this.loggedIn=false;
-    this.Router.navigateByUrl('/login');
+    this.currentUser='';
+    //this.Router.navigateByUrl('/login');
 
   }
 }

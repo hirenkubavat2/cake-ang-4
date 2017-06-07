@@ -41,12 +41,5 @@ export class ItemEditComponent implements OnInit {
 
   onSubmit(data){
     console.log(data);
-    this.SavedataService.updateItem(data).subscribe(res=>{
-      if(data.length>0)
-        alert('Saved!');
-      else
-        alert('not saved');
-
-    });
   }
 }

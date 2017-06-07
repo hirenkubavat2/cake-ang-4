@@ -67,17 +67,29 @@ class LoginController extends AppController{
                 $this->responseData = [];
             } else {
                 //if everything is ok then set userdata to session
-                $this->Auth->setUser($user);
                 //Generate user auth token
-                $this->token = Security::hash($user['id'] . $user['email'], 'sha1', true);
+                $this->token = Security::hash($user['id'] . $user['email'].time(), 'sha1', true);
+                /* save user token */
+                $this->loadModel('LoginHistories');
+                $this->LoginHistories->saveHistory([
+                    'user_id'=>$user['id'],
+                    'token'=>$this->token,
+                    'signin'=>date('H:i:s'),
+                    'signout'=>date('H:i:s'),
+                    'ip'=>$_SERVER['REMOTE_ADDR'],
+                    'created'=>date('Y-m-d H:i:s'),
+                    'modified'=>date('Y-m-d H:i:s'),
+                    'deleted'=>0,
+                    'device_id'=>$_SERVER['HTTP_USER_AGENT'],
+                    'device_type'=>$_SERVER['HTTP_USER_AGENT']
+                ]);
                 $this->header = 200;
                 $this->message = 'Login Successful';
                 $this->status = 1;
-                $this->responseData = $user + ['request_session' => $this->token];
+                $this->data = $user + ['request_session' => $this->token];
                 //Add token to Auth session
                 $this->request->session()->write('Auth.User.token', $this->token);
                 //return auth token
-                $this->response->header('Authorization', 'bearer', $this->token);
             }
 
         }

@@ -82,7 +82,6 @@ class AppController extends Controller
             ],
             'unauthorizedRedirect' => false,
         ]);
-
         $this->Auth->allow();
 
         /*
@@ -101,6 +100,7 @@ class AppController extends Controller
     {
 
 
+
     }
 
     /**
@@ -108,14 +108,15 @@ class AppController extends Controller
      */
 
     public function checkUserToken(){
-        $requestToken=$this->getRequestToken();
+        $this->loadModel('LoginHistories');
+            if(isset($this->request->data['loggedInId']) && isset($this->request->data['loggedInId']) && $this->LoginHistories->validateToken($this->request->data['loggedInId'],$this->request->data['token'])){
+                return true;
+            }else{
+                return false;
+            }
 
-        if($requestToken!=$this->userToken()){
-            $this->header=403;
-            $this->message='Token required!';
-            return false;
-        }
-        return true;
+
+
     }
 
     /**
@@ -176,12 +177,14 @@ class AppController extends Controller
 
         $this->response->header('Access-Control-Allow-Origin','*');
         parent::beforeRender($event);
-        if(!in_array($this->request->here,$this->actionList) && !$this->checkUserToken()){
-            $this->request->session()->delete('Auth.User.token');
-            $this->header=200;
-            $this->message='logged out!';
-            $this->status=1;
-            return ;
+        if( !in_array($this->request->here, $this->actionList)) {
+            if(!$this->checkUserToken()) {
+                header('HTTP/1.1 403  RequestSessionMissing');
+                $data = array('status' => 2, 'message' => 'request session token expired!');
+                echo json_encode($data);
+                exit();
+            }
+
         }
 
 

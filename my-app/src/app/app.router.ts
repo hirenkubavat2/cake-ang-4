@@ -9,7 +9,6 @@ import { UsersComponent } from './users/users.component';
 import {AuthService} from "./auth.service";
 import {NeosoftComponent} from './neosoft/neosoft.component';
 import {UserlistComponent} from './userlist/userlist.component';
-import {ItemEditComponent} from './item-edit/item-edit.component';
 import {RolesComponent} from './roles/roles.component';
 import {RolelistComponent} from './rolelist/rolelist.component';
 import {RoleupdateComponent} from './roleupdate/roleupdate.component';
@@ -19,10 +18,11 @@ export const router: Routes=[
     { path: 'dashboard',component: DashboardComponent,canActivate :[AuthService]},
     { path: 'login',component:LoginComponent },
     { path: 'posts',component: PostsComponent},
-    { path: 'articles',component: ArticlesComponent ,canActivate :[AuthService]},
+    { path: 'articles',component: ArticlesComponent,canActivate :[AuthService]},
     { path: 'users',component: UsersComponent },
     { path: 'neosoft',component: NeosoftComponent},
     { path: 'users/list',component:UserlistComponent },
+    { path: 'users/lists',component:UserlistComponent },
     { path: 'home',component:AppComponent},
     { path: 'user/:id',component:UsersComponent},
     { path: 'roles/add',component:RolesComponent},
