@@ -14,8 +14,9 @@ import { FormControl,FormGroup,Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
   UserForm:FormGroup;
   userLoginResponse:any;
+  hasErrors:any;
   constructor(private SavedataService:SavedataService,private Router:Router) {
-
+    this.hasErrors='';
   }
 
   ngOnInit() {
@@ -43,7 +44,10 @@ export class LoginComponent implements OnInit {
           this.Router.navigateByUrl('/login');
         }
       },
-      err=>this.logError(err)
+      err=>{
+          // console.log(err.json().message);
+          this.hasErrors=err.json().message;
+      }
     );
 
   }

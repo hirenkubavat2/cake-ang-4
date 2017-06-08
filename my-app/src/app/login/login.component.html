@@ -4,11 +4,12 @@
       <div class="panel-heading">
         <h3 class="panel-title">Please Sign In</h3>
       </div>
+
       <div class="panel-body">
         <form role="form" [formGroup]="UserForm" (ngSubmit)="UserForm.valid && userLogin(UserForm.value);submitted=true">
           <fieldset>
             <div class="form-group">
-              <div *ngIf="submitted && hasErrors" class="alert alert-danger">
+              <div *ngIf="hasErrors!='' " class="alert alert-danger">
                 {{ hasErrors }}
               </div>
 

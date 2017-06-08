@@ -34,7 +34,8 @@
         "../node_modules/template-assests/css/morrisjs/morris.min.js",
         "../node_modules/template-assests/data/morris-data.js",
         "../node_modules/template-assests/dist/js/sb-admin-2.js",
-        "../node_modules/template-assests/css/bootstrap/js/emodal.js"
+        "../node_modules/template-assests/css/bootstrap/js/emodal.js",
+        "../node_modules/template-assests/security.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

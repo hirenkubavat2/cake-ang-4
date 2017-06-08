@@ -13,22 +13,30 @@ export class UserlistComponent implements OnInit {
 
   userslist:any;
   hasErrors:any;
-  db:any;
-
+  pagination:any;
+  pageNumber:number;
   constructor(private  SavedataService:SavedataService,private Router:Router) {
     this.hasErrors='';
-    SavedataService.getData().subscribe(
-    data=>{
-      this.userslist=data.data;
-      console.log(this.userslist);
+    this.getUserslist();
+  }
 
-    },
+  getRecordByPagination(pageNumber:number){
+    if(pageNumber>0){
+      this.pageNumber=pageNumber;
+      this.getUserslist();
+    }
+  }
+  getUserslist(){
+    this.SavedataService.getData(this.pageNumber).subscribe(
+        data=>{
+          this.userslist=data.data;
+          this.pagination=data.paging;
+          console.log(this.userslist,this.pagination);
+        },
         err=>{
-           console.log(err.data);
+          console.log(err.data);
         }
     );
-
-
   }
   ngOnInit() {
 
@@ -37,6 +45,17 @@ export class UserlistComponent implements OnInit {
   updateRecord(id:number){
     this.Router.navigate(['/user/',id]);
   }
+
+  createRange(number){
+
+    var items: number[] = [];
+    for(var i = 1; i <= number; i++){
+      items.push(i);
+    }
+    return items;
+  }
+
+
 
   deleteRecord(item){
 

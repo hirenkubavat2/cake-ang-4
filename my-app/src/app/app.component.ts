@@ -31,9 +31,7 @@ export class AppComponent {
     localStorage.removeItem('currentUser');
     this.loggedIn=false;
     this.currentUser='';
-    //this.Router.navigateByUrl('/login');
+    this.Router.navigateByUrl('/login');
 
   }
 }
-
-

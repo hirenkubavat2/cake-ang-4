@@ -13,16 +13,41 @@ declare var eModal:any;
 })
 export class RolelistComponent implements OnInit {
   roles:any;
+  pageNumber:number;
+  pagination:any;
   constructor(private savedataService:SavedataService,private router:Router) {
-    this.savedataService.getRoles().subscribe(data=>{
-      this.roles=data.data;
-      console.log(this.roles);
-    });
+      this.pageNumber=0;
+      this.pagination='';
+    this.getRoles();
   }
 
   ngOnInit() {
 
   }
+
+    deleteMultiple(ids){
+        console.log(ids);
+    }
+
+  getRoleByPagination(pageNumber:number){
+      this.pageNumber=pageNumber;
+      this.getRoles();
+  }
+
+  getRoles(){
+      this.savedataService.getRoles(this.pageNumber).subscribe(data=>{
+          this.roles=data.data;
+          this.pagination=data.paging;
+          console.log(this.roles);
+      });
+  }
+    createRange(number){
+        var items: number[] = [];
+        for(var i = 1; i <= number; i++){
+            items.push(i);
+        }
+        return items;
+    }
 
   updateRole(item){
       this.router.navigateByUrl('/roles/edit/'+item.id);

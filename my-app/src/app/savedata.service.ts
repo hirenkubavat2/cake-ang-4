@@ -48,8 +48,14 @@ export class SavedataService {
         );
     }
 
-    getData(): Observable<any>{
-        return this.http.post('/api/users/list',this.addToken()).map(data=> data.json());
+    getData(pageNumber:number): Observable<any>{
+        if(pageNumber>0){
+            return this.http.post('/api/users/list?paging=true&page='+pageNumber,this.addToken()).map(data=> data.json());
+        }
+        else{
+            return this.http.post('/api/users/list',this.addToken()).map(data=> data.json());
+        }
+
     }
 
     login(data) : Observable<any>{
@@ -84,8 +90,8 @@ export class SavedataService {
         headers.append('Access-Control-Allow-Origin','*');
     }
 
-    getRoles(){
-        return this.http.post('/api/roles/list',
+    getRoles(pageNumber:number){
+        return this.http.post('/api/roles/list?paging=true&page='+pageNumber,
             Object.assign({},this.addToken())
         ).map(data=> data.json());
     }

@@ -15,21 +15,46 @@
         <!-- /.panel-heading -->
         <div class="panel-body">
           <div class="table-responsive">
-            <table class="table">
+            <table [(ngModel)]="roles" class="table" ngDefaultControl>
               <thead>
               <tr>
+                <th><input type="checkbox"/> </th>
                 <th>Role Name</th>
-                <th>Action</th>
+                <th>Edit</th>
+                <th>Delete</th>
               </tr>
               </thead>
               <tbody>
-              <tr  *ngFor="let item of roles">
+              <tr *ngFor="let item of roles">
+                <td><input name="options-item.id" type="checkbox" id="item.id" value="item.id" [(ngModel)]="options-item.id"></td>
                 <td>{{ item.role }}  </td>
                 <td> <input type="button" class="btn btn-outline btn-primary" value="Edit" (click)="updateRole(item)"/> </td>
                 <td> <input type="button" class="btn btn-outline btn-warning" value="Delete" (click)="deleteRole(item)"/> </td>
               </tr>
               </tbody>
             </table>
+            <div *ngIf="pagination!='' " class="pagination-data text-right">
+              <nav aria-label="...">
+                <ul class="pagination">
+
+                  <li class="page-item" [ngClass]="{'disabled':(!pagination?.prevPage) }">
+                    <a (click)="getRoleByPagination( (pagination?.page)-1)" class="page-link" href="Javascript:void(0)" tabindex="-1">Previous</a>
+                  </li>
+
+                  <li *ngFor="let item of createRange(pagination?.pageCount);let myIndex=index" class="page-item">
+                    <a (click)="getRoleByPagination(myIndex+1)" class="page-link" href="Javascript:void(0);">{{myIndex+1}}</a>
+                  </li>
+
+
+
+                  <li class="page-item" [ngClass]="{'disabled':(!pagination?.nextPage) }">
+                    <a (click)="getRoleByPagination( (pagination?.page)+1)" class="page-link" href="Javascript:void(0)" tabindex="-1">Next</a>
+                  </li>
+
+                </ul>
+              </nav>
+              <button (click)="deleteMultiple(options)" class="alert-danger">Delete Selected</button>
+            </div>
           </div>
           <!-- /.table-responsive -->
         </div>

@@ -8,10 +8,13 @@ export class AuthService implements CanActivate{
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     console.log(state.url);
     if(state.url=='/login' && this.checkUserLogin()){
-      return true;
+
+      return false;
     }
     else {
+
       return true;
+
     }
   }
   currentUser='';

@@ -42,6 +42,7 @@ class AppController extends Controller
     public $status=0;
     public $data=[];
     public $message='something went wrong';
+    public $paging=[];
     public $token='';
     public $headerMap = [
         200 => 'OK',
@@ -50,6 +51,11 @@ class AppController extends Controller
         403 => 'Forbidden',
         500 => 'Internal Server Error'
     ];
+
+    public $paginate=[
+        'limit'=>5
+    ];
+
     public $actionList=[];
     /**
      * Initialization hook method.
@@ -83,6 +89,7 @@ class AppController extends Controller
             'unauthorizedRedirect' => false,
         ]);
         $this->Auth->allow();
+        $this->loadComponent('Paginator');
 
         /*
          * Enable the following components for recommended CakePHP security settings.
@@ -175,7 +182,6 @@ class AppController extends Controller
 
     public function beforeRender(Event $event){
 
-        $this->response->header('Access-Control-Allow-Origin','*');
         parent::beforeRender($event);
         if( !in_array($this->request->here, $this->actionList)) {
             if(!$this->checkUserToken()) {
@@ -193,11 +199,17 @@ class AppController extends Controller
             $this->data = $this->responseData;
         }
         $this->response->statusCode($this->header);
+        if(isset($this->request->data['paging']))
+            $pagination=true;
+        else
+            $pagination=false;
+
         $this->set([
             'data' =>$this->data,
             'status'=>$this->status,
             'message' =>$this->message,
-            '_serialize' => ['status','data','message']
+            'paging'=>($pagination)  ? current($this->request->param('paging')) : [] ,
+            '_serialize' => ['status','data','message','paging']
         ]);
 
 
