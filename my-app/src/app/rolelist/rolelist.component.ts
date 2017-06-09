@@ -25,8 +25,8 @@ export class RolelistComponent implements OnInit {
 
   }
 
-    deleteMultiple(ids){
-        console.log(ids);
+    deleteMultiple(){
+
     }
 
   getRoleByPagination(pageNumber:number){

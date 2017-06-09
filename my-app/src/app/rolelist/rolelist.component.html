@@ -14,11 +14,13 @@
         </div>
         <!-- /.panel-heading -->
         <div class="panel-body">
+
           <div class="table-responsive">
+
             <table [(ngModel)]="roles" class="table" ngDefaultControl>
               <thead>
               <tr>
-                <th><input type="checkbox"/> </th>
+
                 <th>Role Name</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -26,7 +28,7 @@
               </thead>
               <tbody>
               <tr *ngFor="let item of roles">
-                <td><input name="options-item.id" type="checkbox" id="item.id" value="item.id" [(ngModel)]="options-item.id"></td>
+
                 <td>{{ item.role }}  </td>
                 <td> <input type="button" class="btn btn-outline btn-primary" value="Edit" (click)="updateRole(item)"/> </td>
                 <td> <input type="button" class="btn btn-outline btn-warning" value="Delete" (click)="deleteRole(item)"/> </td>
@@ -53,7 +55,7 @@
 
                 </ul>
               </nav>
-              <button (click)="deleteMultiple(options)" class="alert-danger">Delete Selected</button>
+
             </div>
           </div>
           <!-- /.table-responsive -->
